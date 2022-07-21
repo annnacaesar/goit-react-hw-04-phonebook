@@ -3,7 +3,7 @@ import {PropTypes} from 'prop-types'
 
 const ContactList = ({ contacts, onDeleteContact }) => (
 	<ul>
-		{contacts.map(({ id, name, number }) => {
+		{contacts && contacts.map(({ id, name, number }) => {
 			return (
 				<Item key={id}>
 					<Contact>
