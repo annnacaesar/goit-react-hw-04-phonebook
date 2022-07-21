@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { nanoid } from 'nanoid';
 import ContactList from '../ContactList';
 import ContactForm from '../ContactForm';
@@ -37,8 +37,7 @@ export const App = () => {
 	const changeFilter = event => {
 		setFilter(event.currentTarget.value);
 	};
-
-	const isVisibleContacts = () => {
+	const isVisibleContacts = useMemo(() => {
 		const normalizeFilter = filter.toLowerCase();
 
 		if (contacts.length !== 0) {
@@ -47,7 +46,7 @@ export const App = () => {
 			);
 		}
 		return;
-	};
+	}, [filter]) // eslint-disable-line
 
 	useEffect(() => {
 		const contacts = window.localStorage.getItem('contacts');
@@ -82,7 +81,7 @@ export const App = () => {
 				<Title>Contacts</Title>
 				<Filter filter={filter} onChange={changeFilter} />
 				<ContactList
-					contacts={isVisibleContacts()}
+					contacts={isVisibleContacts}
 					onDeleteContact={deleteContact}
 				/>
 			</Container>
